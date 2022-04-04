@@ -20,7 +20,7 @@ def createList():
 
 #This function takes the array of the letters, and the array of all the 5 letter words, and then finds words with matching letters and positions and prints them
 #it's a mess.
-def wordFinder(letters, wList):
+def wordFinder(letters, wList, letsToExclude):
 
   print("The word might be:\n")
 
@@ -55,12 +55,23 @@ def wordFinder(letters, wList):
             positionMatch = False
 
       if positionMatch == True:
-        print(word)
+
+        #this part loops through the letters in the word, checking if it matches a word that the user has declared to be not in the word. If the letters do match, the word is not printed
+
+        containsExcludedLetter = False
+
+        for letter in word:
+          for excludedLetter in letsToExclude:
+            if letter == excludedLetter:
+              containsExcludedLetter = True
+
+        if containsExcludedLetter == False:
+          print(word)
 
 
     
 
-#This function just asks the user how many letters they have, then gets each letter and takes the position if they have a known position
+#This function just asks the user how many letters they have, then gets each letter and takes the position if they have a known position. It then asks for all letters which the user knows aren't in the word.
 def getLets(wordList):
 
   
@@ -72,7 +83,9 @@ def getLets(wordList):
     letter.position = input(f"What is the position of {letter.letter}? - leave blank if unknown: ")
     lets.append(letter)
 
-  wordFinder(lets, wordList)
+  excludeLets = input("Please enter all letters you know are not in the word, \nas a continous string of letters: ")
+
+  wordFinder(lets, wordList, excludeLets)
 
 
 
@@ -81,3 +94,4 @@ def getLets(wordList):
 
 list = createList()
 getLets(list)
+
